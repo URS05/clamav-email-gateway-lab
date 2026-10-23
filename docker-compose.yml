@@ -1,0 +1,13 @@
+services:
+  clamav:
+    image: clamav/clamav:stable
+  mailpit:
+    image: axllent/mailpit
+    ports: ["8025:8025"]
+  gateway:
+    build: .
+    volumes: ["./:/app"]
+    ports: ["2525:2525"]
+    depends_on:
+      clamav:
+        condition: service_healthy
